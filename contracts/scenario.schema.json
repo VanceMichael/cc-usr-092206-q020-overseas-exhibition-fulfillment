@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "展会履约平台场景脚本",
+  "description": "声明式展会场景：按时间顺序编排主办方与参展双方的操作，回放器解析 ref 引用并产出角色视图与成效报告。联系方式一律使用 example.test 占位，不含真实个人信息。",
+  "type": "object",
+  "required": ["domain", "version", "sample_id", "scenario"],
+  "properties": {
+    "domain": { "const": "overseas-exhibition-fulfillment" },
+    "version": { "type": "integer", "minimum": 1 },
+    "sample_id": { "type": "string", "minLength": 1 },
+    "scenario": {
+      "type": "object",
+      "required": ["edition", "startAt", "script"],
+      "properties": {
+        "edition": { "type": "string", "minLength": 1 },
+        "startAt": { "type": "string", "format": "date-time" },
+        "reportAt": { "type": "string", "format": "date-time" },
+        "script": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["op"],
+            "properties": {
+              "op": {
+                "type": "string",
+                "enum": [
+                  "party.register",
+                  "qualification.submit",
+                  "qualification.review",
+                  "representative.add",
+                  "representative.absent",
+                  "exhibit.register",
+                  "exhibit.swap",
+                  "sample.import",
+                  "sample.review",
+                  "sample.ship",
+                  "sample.outcome",
+                  "booth.assign",
+                  "event.schedule",
+                  "lead.record",
+                  "demand.record",
+                  "meeting.hold",
+                  "translation.arrange",
+                  "minute.record",
+                  "livestream.authorize",
+                  "livestream.withdraw",
+                  "quote.issue",
+                  "quote.accept",
+                  "order.split",
+                  "order.fulfill",
+                  "buyer.merge",
+                  "cooperation.terminate",
+                  "consent.grant",
+                  "consent.revoke"
+                ]
+              },
+              "at": { "type": "string", "format": "date-time" },
+              "ref": { "type": "string" },
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "description": "所有变更类操作必填：换展、缺席、身份合并、内容撤回、订单拆分、合作终止、授权撤回、驳回/暂扣。"
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

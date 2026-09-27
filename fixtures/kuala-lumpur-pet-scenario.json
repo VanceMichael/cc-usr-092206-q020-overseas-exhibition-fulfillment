@@ -1,0 +1,83 @@
+{
+  "domain": "overseas-exhibition-fulfillment",
+  "version": 1,
+  "sample_id": "kuala-lumpur-pet-2026",
+  "scenario": {
+    "edition": "Kuala Lumpur Merchandise Fair 2026 Autumn",
+    "startAt": "2026-09-10T09:00:00+08:00",
+    "reportAt": "2026-09-25T10:00:00+08:00",
+    "script": [
+      { "op": "party.register", "ref": "organizer", "kind": "organizer", "name": "吉隆坡商品展主办方", "country": "马来西亚" },
+
+      { "op": "party.register", "ref": "mengzhua", "kind": "exhibitor", "name": "浙江萌爪宠物用品有限公司", "country": "中国", "categories": ["宠物食品", "宠物玩具", "宠物清洁"], "contact": { "channel": "email", "value": "export@mengzhua.example.test" } },
+      { "op": "party.register", "ref": "miaoxiang", "kind": "exhibitor", "name": "喵享智能宠物科技", "country": "中国", "categories": ["宠物食品"], "contact": { "channel": "email", "value": "sales@miaoxiang.example.test" } },
+
+      { "op": "qualification.submit", "exhibitor": "mengzhua", "documents": ["营业执照", "宠物食品出口备案", "产品检测报告"] },
+      { "op": "qualification.review", "at": "2026-08-22T10:00:00+08:00", "exhibitor": "mengzhua", "approve": true },
+      { "op": "qualification.submit", "at": "2026-08-20T10:00:00+08:00", "exhibitor": "miaoxiang", "documents": ["营业执照"] },
+      { "op": "qualification.review", "at": "2026-08-23T10:00:00+08:00", "exhibitor": "miaoxiang", "approve": false, "reason": "缺少马来西亚兽医局要求的宠物食品进口准证备案" },
+
+      { "op": "party.register", "ref": "nanyang", "kind": "channel_partner", "name": "南洋宠物分销（巴生谷）", "country": "马来西亚", "categories": ["宠物食品", "宠物玩具"], "regions": ["吉隆坡", "巴生谷"] },
+      { "op": "party.register", "ref": "jinshi", "kind": "channel_partner", "name": "金狮宠物连锁", "country": "马来西亚", "categories": ["宠物清洁"], "regions": ["槟城"] },
+
+      { "op": "representative.add", "at": "2026-08-25T10:00:00+08:00", "exhibitor": "mengzhua", "ref": "repLi", "name": "李岚", "role": "外贸经理" },
+      { "op": "representative.add", "at": "2026-08-25T10:00:00+08:00", "exhibitor": "mengzhua", "ref": "repTan", "name": "谭骁", "role": "渠道专员" },
+      { "op": "representative.absent", "at": "2026-09-10T08:30:00+08:00", "representative": "repTan", "reason": "吉隆坡机场签证系统故障导致入境延误，首日无法到场" },
+
+      { "op": "exhibit.register", "at": "2026-09-01T10:00:00+08:00", "exhibitor": "mengzhua", "ref": "freezeDried", "name": "萌爪冻干猫粮（鸡肉味）", "category": "宠物食品" },
+      { "op": "exhibit.register", "at": "2026-09-01T10:00:00+08:00", "exhibitor": "mengzhua", "ref": "teaser", "name": "逗猫棒替换头套装", "category": "宠物玩具" },
+      { "op": "exhibit.register", "at": "2026-09-01T10:00:00+08:00", "exhibitor": "mengzhua", "ref": "foamSpray", "name": "宠物免洗清洁喷雾", "category": "宠物清洁" },
+      { "op": "exhibit.swap", "at": "2026-09-09T16:00:00+08:00", "exhibit": "mengzhua", "exhibit": "foamSpray", "replacement": { "ref": "wipes", "name": "宠物可降解清洁湿巾", "category": "宠物清洁" }, "reason": "航司将加压喷雾罐列为限运品，原展品无法随机抵达，改用同类别湿巾替补" },
+
+      { "op": "sample.import", "at": "2026-08-28T10:00:00+08:00", "exhibitor": "mengzhua", "exhibit": "freezeDried", "ref": "sampleFood", "quantity": 40, "customsRef": "KLC-ATA-7781" },
+      { "op": "sample.import", "at": "2026-08-28T10:00:00+08:00", "exhibitor": "mengzhua", "exhibit": "teaser", "ref": "sampleToy", "quantity": 60, "customsRef": "KLC-ATA-7782" },
+      { "op": "sample.review", "at": "2026-09-05T14:00:00+08:00", "sample": "sampleFood", "approve": true },
+      { "op": "sample.review", "at": "2026-09-05T14:00:00+08:00", "sample": "sampleToy", "approve": false, "reason": "须补充羽毛配件的成分与安全检测报告，暂不予清关" },
+
+      { "op": "booth.assign", "at": "2026-08-20T09:00:00+08:00", "exhibitor": "mengzhua", "hall": "B 馆", "boothNo": "B-218", "start": "2026-09-10T09:00:00+08:00", "end": "2026-09-12T18:00:00+08:00" },
+      { "op": "event.schedule", "at": "2026-08-26T09:00:00+08:00", "exhibitor": "mengzhua", "title": "萌爪冻干系列新品发布会", "start": "2026-09-11T11:00:00+08:00", "end": "2026-09-11T12:00:00+08:00" },
+
+      { "op": "party.register", "at": "2026-09-10T10:00:00+08:00", "ref": "chen", "kind": "buyer", "name": "陈女士（吉隆坡个人养宠用户）", "country": "马来西亚", "contact": { "channel": "whatsapp", "value": "+60-0000-0001" } },
+      { "op": "party.register", "at": "2026-09-10T11:00:00+08:00", "ref": "pawA", "kind": "buyer", "name": "PawMart 采购部 王先生", "country": "马来西亚", "contact": { "channel": "email", "value": "buyer@pawmart.example.test" } },
+      { "op": "party.register", "at": "2026-09-11T15:00:00+08:00", "ref": "pawB", "kind": "buyer", "name": "王先生 PawMart（第二张名片）", "country": "马来西亚", "contact": { "channel": "whatsapp", "value": "+60-0000-0002" } },
+      { "op": "party.register", "at": "2026-09-11T16:00:00+08:00", "ref": "jincheng", "kind": "buyer", "name": "金城宠物批发", "country": "马来西亚", "contact": { "channel": "email", "value": "trade@jincheng.example.test" } },
+
+      { "op": "lead.record", "at": "2026-09-10T10:20:00+08:00", "exhibitor": "mengzhua", "buyer": "chen", "intent": "browsing", "note": "现场浏览冻干猫粮，仅索取宣传单页", "ref": "leadChen" },
+      { "op": "consent.grant", "at": "2026-09-10T10:25:00+08:00", "from": "chen", "to": "mengzhua", "purpose": "现场活动回访", "ref": "consentChen" },
+      { "op": "consent.revoke", "at": "2026-09-13T09:00:00+08:00", "consent": "consentChen", "reason": "客户撤展次日明确表示仅自用，要求停止联系" },
+
+      { "op": "lead.record", "at": "2026-09-10T11:10:00+08:00", "exhibitor": "mengzhua", "buyer": "pawA", "intent": "browsing", "note": "对冻干猫粮有采购意向，等待样品测试安排", "ref": "leadPawA" },
+      { "op": "lead.record", "at": "2026-09-11T15:05:00+08:00", "exhibitor": "mengzhua", "buyer": "pawB", "intent": "sample_testing", "note": "同一位采购第二天再来展位，用英文名片再次登记", "ref": "leadPawB" },
+      { "op": "lead.record", "at": "2026-09-11T16:10:00+08:00", "exhibitor": "mengzhua", "buyer": "jincheng", "intent": "channel_interest", "note": "本地批发商，愿意在马来西亚承接整柜订单", "ref": "leadJincheng" },
+
+      { "op": "sample.ship", "at": "2026-09-11T10:00:00+08:00", "sample": "sampleFood", "buyer": "pawA", "ref": "shipPaw" },
+      { "op": "sample.outcome", "at": "2026-09-18T15:00:00+08:00", "shipment": "shipPaw", "outcome": "passed", "note": "适口性与包装测试通过，PawMart 内部立项" },
+
+      { "op": "meeting.hold", "at": "2026-09-11T10:30:00+08:00", "exhibitor": "mengzhua", "buyer": "pawA", "ref": "meetingPaw" },
+      { "op": "translation.arrange", "meeting": "meetingPaw", "from": "zh", "to": "English" },
+      { "op": "minute.record", "meeting": "meetingPaw", "summary": "PawMart 为巴生谷 12 家门店采购，首批试单关注冻干猫粮保质期与清真认证；我方承诺提供 JAKIM 认证进度说明。", "nextSteps": ["9月18日前反馈样品测试结果", "我方9月15日前提供清真认证时间表", "测试通过后出具 14 天有效报价"] },
+
+      { "op": "demand.record", "at": "2026-09-11T10:55:00+08:00", "buyer": "pawB", "ref": "demandPaw", "categories": ["宠物食品"], "quantity": 3000, "budget": "MYR 90000", "note": "要求 10 月中旬前到仓" },
+      { "op": "demand.record", "at": "2026-09-11T16:20:00+08:00", "buyer": "jincheng", "ref": "demandJincheng", "categories": ["宠物玩具"], "quantity": 10000, "budget": "MYR 60000" },
+
+      { "op": "livestream.authorize", "at": "2026-09-11T09:00:00+08:00", "exhibitor": "mengzhua", "partner": "nanyang", "scope": "2026 秋季新品发布会片段，仅限马来西亚境内社媒账号", "contents": ["冻干猫粮新品直播切片", "逗猫棒现场演示切片"], "ref": "liveNanyang" },
+      { "op": "livestream.withdraw", "at": "2026-09-11T18:00:00+08:00", "authorization": "liveNanyang", "contentIndex": 1, "reason": "切片中第三方牵引绳品牌标识未获授权露出，撤回该片段" },
+
+      { "op": "quote.issue", "at": "2026-09-11T16:30:00+08:00", "exhibitor": "mengzhua", "buyer": "jincheng", "ref": "quoteJincheng", "items": [{ "name": "逗猫棒替换头套装", "quantity": 10000, "unitPrice": 5.2 }], "currency": "MYR", "validDays": 1 },
+
+      { "op": "quote.issue", "at": "2026-09-12T11:00:00+08:00", "exhibitor": "mengzhua", "buyer": "pawB", "ref": "quotePaw", "items": [{ "name": "萌爪冻干猫粮（鸡肉味）", "quantity": 3000, "unitPrice": 27.5 }], "currency": "MYR", "validDays": 14 },
+      { "op": "buyer.merge", "at": "2026-09-13T10:00:00+08:00", "primary": "pawA", "duplicate": "pawB", "reason": "两张名片的公司邮箱、公司名与采购品类一致，确认为 PawMart 同一采购负责人" },
+      { "op": "consent.grant", "at": "2026-09-13T10:10:00+08:00", "from": "pawA", "to": "mengzhua", "purpose": "样品与订单跟进", "ref": "consentPaw" },
+      { "op": "consent.grant", "at": "2026-09-13T10:20:00+08:00", "from": "mengzhua", "to": "nanyang", "purpose": "渠道对接", "ref": "consentNanyang" },
+      { "op": "quote.accept", "at": "2026-09-14T09:30:00+08:00", "quote": "quotePaw", "ref": "orderPaw" },
+      { "op": "order.split", "at": "2026-09-14T10:00:00+08:00", "order": "orderPaw", "reason": "买方要求按巴生港清关与门店上架档期分两批发货", "children": [
+        { "ref": "orderAir", "label": "空运急单（首批 800 罐先行上架）", "items": [{ "name": "萌爪冻干猫粮（鸡肉味）", "quantity": 800 }] },
+        { "ref": "orderSea", "label": "海运整柜（余量 2200 罐）", "items": [{ "name": "萌爪冻干猫粮（鸡肉味）", "quantity": 2200 }] }
+      ] },
+      { "op": "order.fulfill", "at": "2026-09-20T14:00:00+08:00", "order": "orderAir", "itemIndex": 0, "quantity": 800 },
+      { "op": "order.fulfill", "at": "2026-09-24T14:00:00+08:00", "order": "orderSea", "itemIndex": 0, "quantity": 1000 },
+
+      { "op": "cooperation.terminate", "at": "2026-09-15T11:00:00+08:00", "partyA": "mengzhua", "partyB": "jinshi", "reason": "双方在清洁品类年度返点与最低起订量上未能达成一致，本届终止对接" }
+    ]
+  }
+}
