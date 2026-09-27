@@ -1,22 +1,719 @@
 {
   "domain": "overseas-exhibition-fulfillment",
-  "version": 1,
+  "version": 2,
   "sample_id": "record-020",
+  "edition": "2026-KL-PET",
+  "as_of": "2026-09-27",
   "actors": [
     "中国参展企业",
     "马来西亚采购商",
     "本地渠道伙伴",
-    "展会主办方"
+    "展会主办方",
+    "本地直播合作方",
+    "现场翻译服务商"
   ],
   "facts": [
     "展会从产品展示向产业对接转型",
     "新议题包括跨境电商、人工智能商业应用和宠物消费",
-    "主办方计划在展后持续跟进商贸配对成果"
+    "主办方计划在展后持续跟进商贸配对成果",
+    "参展企业三天撤展后仍需沿着样品、报价和订单继续履约",
+    "马来西亚本地渠道只应看到与自身需求匹配且仍在有效期内的材料"
   ],
   "constraints": [
-    "参展与样品合规",
-    "买家需求匹配",
-    "直播渠道授权",
-    "展后订单履约"
-  ]
+    "展前：企业资质、产品类别、样品入境与展位活动档期须经主办方核验",
+    "现场：采购需求、翻译支持、直播授权、洽谈纪要与报价必须关联到准确主体",
+    "变更：临时换展品、代表缺席、身份合并、直播撤回、订单拆分、合作终止均须保留原因与操作人",
+    "隐私：买家联系资料只能按双方已同意的用途和期限继续使用",
+    "展后：材料可见性以需求匹配且报价/样品状态仍有效为前提",
+    "成效：客户转化与履约进度必须可由底层记录复算核验"
+  ],
+  "event_types": [
+    "exhibit_swap",
+    "representative_absent",
+    "identity_merge",
+    "livestream_retraction",
+    "order_split",
+    "collaboration_terminated"
+  ],
+  "consent_purposes": [
+    "quotation_followup",
+    "sample_test_followup",
+    "order_fulfillment"
+  ],
+  "organizations": [
+    {
+      "id": "org-exh-01",
+      "name": "杭州宠悦用品有限公司",
+      "role": "exhibitor",
+      "country": "CN"
+    },
+    {
+      "id": "org-host-01",
+      "name": "吉隆坡商品展主办方",
+      "role": "host",
+      "country": "MY"
+    },
+    {
+      "id": "org-buy-01",
+      "name": "PetWorld Retail Sdn. Bhd.",
+      "role": "buyer",
+      "country": "MY"
+    },
+    {
+      "id": "org-buy-02",
+      "name": "WarmPaw Pet Shop Johor",
+      "role": "buyer",
+      "country": "MY"
+    },
+    {
+      "id": "org-ch-01",
+      "name": "Selangor Fulfill Hub Sdn. Bhd.",
+      "role": "local_channel",
+      "country": "MY"
+    },
+    {
+      "id": "org-ls-01",
+      "name": "KL Live Commerce",
+      "role": "livestream_partner",
+      "country": "MY"
+    },
+    {
+      "id": "org-mcn-01",
+      "name": "MY Pet Channel MCN",
+      "role": "livestream_partner",
+      "country": "MY"
+    },
+    {
+      "id": "org-tr-01",
+      "name": "KL Trilingual Interpretation Service",
+      "role": "translation_provider",
+      "country": "MY"
+    }
+  ],
+  "qualifications": [
+    {
+      "id": "qual-01",
+      "org_id": "org-exh-01",
+      "status": "approved",
+      "categories": ["pet_cleaning", "pet_grooming", "pet_feeding_electrical"],
+      "documents": ["business_license_cn.pdf", "export_record_2025.pdf", "product_test_reports.zip"],
+      "reviewed_by": "org-host-01",
+      "reviewed_at": "2026-08-30"
+    }
+  ],
+  "product_catalog": [
+    {
+      "id": "prod-01",
+      "org_id": "org-exh-01",
+      "name": "植物结团猫砂 10L",
+      "category": "pet_cleaning",
+      "status": "listed"
+    },
+    {
+      "id": "prod-02",
+      "org_id": "org-exh-01",
+      "name": "硅胶宠物美容手套",
+      "category": "pet_grooming",
+      "status": "listed"
+    },
+    {
+      "id": "prod-03",
+      "org_id": "org-exh-01",
+      "name": "智能定时喂食器",
+      "category": "pet_feeding_electrical",
+      "status": "listed"
+    }
+  ],
+  "samples": [
+    {
+      "id": "samp-01",
+      "product_id": "prod-01",
+      "org_id": "org-exh-01",
+      "qty": 20,
+      "unit": "bag",
+      "customs_status": "customs_cleared",
+      "permit_ref": "MITI-PE-2026-09-1140",
+      "cleared_at": "2026-09-17",
+      "booth_id": "booth-A101"
+    },
+    {
+      "id": "samp-02",
+      "product_id": "prod-02",
+      "org_id": "org-exh-01",
+      "qty": 12,
+      "unit": "piece",
+      "customs_status": "customs_cleared",
+      "permit_ref": "MITI-PE-2026-09-1141",
+      "cleared_at": "2026-09-17",
+      "booth_id": "booth-A101"
+    },
+    {
+      "id": "samp-03",
+      "product_id": "prod-03",
+      "org_id": "org-exh-01",
+      "qty": 4,
+      "unit": "piece",
+      "customs_status": "customs_held",
+      "permit_ref": "SIRIM-PENDING-7781",
+      "held_reason": "电器类产品等待 SIRIM 认证核验，暂不许展示或派发",
+      "booth_id": null
+    }
+  ],
+  "booths": [
+    {
+      "id": "booth-A101",
+      "org_id": "org-exh-01",
+      "hall": "A馆",
+      "setup_window": ["2026-09-19T08:00", "2026-09-19T20:00"],
+      "open_days": ["2026-09-20", "2026-09-21", "2026-09-22"]
+    }
+  ],
+  "show_activities": [
+    {
+      "id": "act-01",
+      "name": "宠物消费产业对接会",
+      "host_org_id": "org-host-01",
+      "start": "2026-09-21T10:00",
+      "end": "2026-09-21T12:00",
+      "location": "吉隆坡会议中心 3号厅"
+    },
+    {
+      "id": "act-02",
+      "name": "跨境直播间专场",
+      "host_org_id": "org-host-01",
+      "start": "2026-09-21T14:00",
+      "end": "2026-09-21T17:00",
+      "location": "直播间 B"
+    }
+  ],
+  "activity_slots": [
+    {
+      "id": "slot-01",
+      "activity_id": "act-01",
+      "org_id": "org-exh-01",
+      "start": "2026-09-21T10:30",
+      "assigned_rep_id": "rep-01",
+      "status": "held"
+    },
+    {
+      "id": "slot-02",
+      "activity_id": "act-02",
+      "org_id": "org-exh-01",
+      "partner_org_id": "org-ls-01",
+      "start": "2026-09-21T14:30",
+      "assigned_rep_id": "rep-01",
+      "status": "held"
+    }
+  ],
+  "representatives": [
+    {
+      "id": "rep-01",
+      "org_id": "org-exh-01",
+      "name": "王岚",
+      "role": "海外销售经理",
+      "status": "present"
+    },
+    {
+      "id": "rep-02",
+      "org_id": "org-exh-01",
+      "name": "李澈",
+      "role": "产品经理",
+      "status": "reassigned_offsite"
+    }
+  ],
+  "identities": [
+    {
+      "id": "id-buy-01",
+      "org_id": "org-buy-01",
+      "kind": "buyer",
+      "status": "active",
+      "merged_from": ["id-buy-01a"]
+    },
+    {
+      "id": "id-buy-01a",
+      "org_id": "org-buy-01",
+      "kind": "buyer",
+      "status": "merged_away",
+      "merged_into": "id-buy-01"
+    },
+    {
+      "id": "id-buy-02",
+      "org_id": "org-buy-02",
+      "kind": "buyer",
+      "status": "active"
+    },
+    {
+      "id": "id-ch-01",
+      "org_id": "org-ch-01",
+      "kind": "local_channel",
+      "status": "active"
+    }
+  ],
+  "name_cards": [
+    {
+      "id": "nc-01",
+      "scanned_at": "2026-09-20T11:20",
+      "booth_id": "booth-A101",
+      "identity_id": "id-buy-01",
+      "original_identity_id": "id-buy-01a",
+      "note": "展台扫码登记，最初只写门店名，凭 SSM 工商注册号确认与 id-buy-01 为同一主体"
+    },
+    {
+      "id": "nc-02",
+      "scanned_at": "2026-09-20T15:05",
+      "booth_id": "booth-A101",
+      "identity_id": "id-buy-02",
+      "original_identity_id": null,
+      "note": "现场浏览并询问美容手套"
+    },
+    {
+      "id": "nc-03",
+      "scanned_at": "2026-09-21T10:40",
+      "booth_id": "booth-A101",
+      "identity_id": "id-ch-01",
+      "original_identity_id": null,
+      "note": "本地渠道伙伴，洽谈区域分销承接"
+    }
+  ],
+  "contacts": [
+    {
+      "id": "contact-01",
+      "identity_id": "id-buy-01",
+      "channels": ["buying@petworld.example.my", "+60-3-0000-0001"],
+      "purposes": ["quotation_followup", "sample_test_followup", "order_fulfillment"],
+      "basis": "signed_form",
+      "granted_at": "2026-09-20",
+      "valid_until": "2026-12-31"
+    },
+    {
+      "id": "contact-02",
+      "identity_id": "id-buy-02",
+      "channels": ["owner@warmpaw.example.my"],
+      "purposes": ["quotation_followup"],
+      "basis": "name_card",
+      "granted_at": "2026-09-20",
+      "valid_until": "2026-10-20"
+    },
+    {
+      "id": "contact-03",
+      "identity_id": "id-ch-01",
+      "channels": "partnership@selangorfulfill.example.my",
+      "purposes": ["quotation_followup", "order_fulfillment"],
+      "basis": "signed_form",
+      "granted_at": "2026-09-21",
+      "valid_until": "2027-03-21"
+    }
+  ],
+  "demands": [
+    {
+      "id": "dem-01",
+      "identity_id": "id-buy-01",
+      "category": "pet_cleaning",
+      "summary": "寻求可冲厕植物猫砂自有品牌供应，首批 500 袋，要求先安排样品测试",
+      "qty": 500,
+      "stage": "ordered",
+      "sample_followup_id": "sf-01",
+      "captured_at": "2026-09-20T11:25",
+      "captured_by": "rep-01"
+    },
+    {
+      "id": "dem-02",
+      "identity_id": "id-buy-02",
+      "category": "pet_grooming",
+      "summary": "对美容手套感兴趣，仅现场浏览，留下名片待报价",
+      "qty": 200,
+      "stage": "quote_expired",
+      "sample_followup_id": "sf-02",
+      "captured_at": "2026-09-20T15:10",
+      "captured_by": "rep-01"
+    },
+    {
+      "id": "dem-03",
+      "identity_id": "id-ch-01",
+      "category": "pet_cleaning",
+      "summary": "渠道方愿承接猫砂区域分销，预估月采购 2000 袋，要求分批入仓",
+      "qty": 2000,
+      "stage": "ordered",
+      "sample_followup_id": null,
+      "captured_at": "2026-09-21T10:50",
+      "captured_by": "rep-01"
+    }
+  ],
+  "interpretation_sessions": [
+    {
+      "id": "ti-01",
+      "demand_id": "dem-01",
+      "provider_org_id": "org-tr-01",
+      "languages": ["zh", "en", "ms"],
+      "start": "2026-09-20T11:30",
+      "status": "completed"
+    },
+    {
+      "id": "ti-02",
+      "demand_id": "dem-03",
+      "provider_org_id": "org-tr-01",
+      "languages": ["zh", "en", "ms"],
+      "start": "2026-09-21T10:55",
+      "status": "completed"
+    }
+  ],
+  "livestream_authorizations": [
+    {
+      "id": "auth-01",
+      "org_id": "org-exh-01",
+      "partner_org_id": "org-ls-01",
+      "scopes": ["product_demo:prod-01", "price_display", "brand_logo"],
+      "status": "active",
+      "granted_at": "2026-09-18",
+      "valid_until": "2026-09-22"
+    },
+    {
+      "id": "auth-02",
+      "org_id": "org-exh-01",
+      "partner_org_id": "org-mcn-01",
+      "scopes": ["brand_story_series", "archive_reuse_6m"],
+      "status": "revoked",
+      "granted_at": "2026-09-10",
+      "revoked_at": "2026-09-19",
+      "revoke_event_id": "evt-006"
+    }
+  ],
+  "livestreams": [
+    {
+      "id": "ls-01",
+      "slot_id": "slot-02",
+      "org_id": "org-exh-01",
+      "partner_org_id": "org-ls-01",
+      "authorization_id": "auth-01",
+      "product_ids": ["prod-01"],
+      "status": "completed",
+      "clips": [
+        {
+          "id": "clip-01",
+          "segment": "00:00-12:00",
+          "status": "published"
+        },
+        {
+          "id": "clip-02",
+          "segment": "12:00-18:40",
+          "status": "retracted",
+          "retraction_id": "lr-01"
+        }
+      ]
+    }
+  ],
+  "livestream_retractions": [
+    {
+      "id": "lr-01",
+      "livestream_id": "ls-01",
+      "clip_id": "clip-02",
+      "at": "2026-09-22T09:30",
+      "requested_by": "org-exh-01",
+      "reason": "片段中口播的促销价已失效，买家要求撤回含报价画面，避免按过期价主张成交",
+      "event_id": "evt-004"
+    }
+  ],
+  "meeting_minutes": [
+    {
+      "id": "min-01",
+      "demand_id": "dem-01",
+      "booth_id": "booth-A101",
+      "at": "2026-09-20T12:00",
+      "attendee_identity_ids": ["id-buy-01"],
+      "attendee_rep_ids": ["rep-01"],
+      "interpretation_session_id": "ti-01",
+      "quote_ids": ["quote-01"],
+      "summary": "确认猫砂规格、冲厕测试标准与样品寄送安排，报价 7 日内有效"
+    },
+    {
+      "id": "min-02",
+      "demand_id": "dem-03",
+      "booth_id": "booth-A101",
+      "at": "2026-09-21T11:40",
+      "attendee_identity_ids": ["id-ch-01"],
+      "attendee_rep_ids": ["rep-01"],
+      "interpretation_session_id": "ti-02",
+      "quote_ids": ["quote-02"],
+      "summary": "渠道首批 1200 袋入雪兰莪仓，剩余 800 袋直发 PetWorld 门店，按拆分单履约"
+    }
+  ],
+  "quotes": [
+    {
+      "id": "quote-01",
+      "demand_id": "dem-01",
+      "identity_id": "id-buy-01",
+      "product_id": "prod-01",
+      "currency": "MYR",
+      "unit_price": 12.5,
+      "qty": 500,
+      "amount": 6250.0,
+      "valid_from": "2026-09-20",
+      "valid_until": "2026-09-30",
+      "status": "valid"
+    },
+    {
+      "id": "quote-02",
+      "demand_id": "dem-03",
+      "identity_id": "id-ch-01",
+      "product_id": "prod-01",
+      "currency": "MYR",
+      "unit_price": 11.8,
+      "qty": 2000,
+      "amount": 23600.0,
+      "valid_from": "2026-09-21",
+      "valid_until": "2026-10-15",
+      "status": "valid"
+    },
+    {
+      "id": "quote-03",
+      "demand_id": "dem-02",
+      "identity_id": "id-buy-02",
+      "product_id": "prod-02",
+      "currency": "MYR",
+      "unit_price": 8.6,
+      "qty": 200,
+      "amount": 1720.0,
+      "valid_from": "2026-09-20",
+      "valid_until": "2026-09-25",
+      "status": "expired"
+    }
+  ],
+  "orders": [
+    {
+      "id": "order-01",
+      "quote_id": "quote-01",
+      "identity_id": "id-buy-01",
+      "product_id": "prod-01",
+      "qty": 500,
+      "currency": "MYR",
+      "amount": 6250.0,
+      "status": "in_fulfillment",
+      "shipped_qty": 0,
+      "placed_at": "2026-09-23"
+    },
+    {
+      "id": "order-02",
+      "quote_id": "quote-02",
+      "identity_id": "id-ch-01",
+      "product_id": "prod-01",
+      "qty": 2000,
+      "currency": "MYR",
+      "amount": 23600.0,
+      "status": "partially_fulfilled",
+      "shipped_qty": 1200,
+      "placed_at": "2026-09-24",
+      "split_event_id": "evt-005",
+      "splits": [
+        {
+          "id": "split-01",
+          "qty": 1200,
+          "amount": 14160.0,
+          "assignee_org_id": "org-ch-01",
+          "fulfillment_role": "warehouse_first_batch",
+          "status": "fulfilled"
+        },
+        {
+          "id": "split-02",
+          "qty": 800,
+          "amount": 9440.0,
+          "assignee_org_id": "org-buy-01",
+          "fulfillment_role": "direct_store_delivery",
+          "status": "pending"
+        }
+      ]
+    }
+  ],
+  "collaborations": [
+    {
+      "id": "collab-01",
+      "org_id": "org-exh-01",
+      "partner_org_id": "org-mcn-01",
+      "scope": "品牌故事系列直播与六个月素材复用",
+      "status": "terminated",
+      "authorization_ids": ["auth-02"],
+      "terminated_event_id": "evt-006"
+    }
+  ],
+  "change_events": [
+    {
+      "id": "evt-001",
+      "type": "exhibit_swap",
+      "at": "2026-09-21T09:50",
+      "actor_org_id": "org-exh-01",
+      "actor_rep_id": "rep-01",
+      "booth_id": "booth-A101",
+      "removed_sample_id": "samp-02",
+      "added_sample_id": "samp-01",
+      "approved_by": "org-host-01",
+      "reason": "开幕首日买家对猫砂结团演示需求集中，临时将主演示位由美容手套调换为猫砂，已报主办方现场批准"
+    },
+    {
+      "id": "evt-002",
+      "type": "representative_absent",
+      "at": "2026-09-21T08:40",
+      "actor_org_id": "org-exh-01",
+      "absent_rep_id": "rep-02",
+      "replacement_rep_id": "rep-01",
+      "activity_slot_id": "slot-01",
+      "reason": "产品经理航班延误无法到场，对接会路演改由海外销售经理王岚代为出席"
+    },
+    {
+      "id": "evt-003",
+      "type": "identity_merge",
+      "at": "2026-09-20T18:00",
+      "actor_org_id": "org-host-01",
+      "merged_identity_id": "id-buy-01a",
+      "surviving_identity_id": "id-buy-01",
+      "reason": "两张名片的 SSM 工商注册号一致，确认为同一连锁采购主体，合并避免重复计数与重复报价"
+    },
+    {
+      "id": "evt-004",
+      "type": "livestream_retraction",
+      "at": "2026-09-22T09:30",
+      "actor_org_id": "org-exh-01",
+      "retraction_id": "lr-01",
+      "reason": "口播促销价已过期，撤回含报价片段，防止买家按失效价格主张成交"
+    },
+    {
+      "id": "evt-005",
+      "type": "order_split",
+      "at": "2026-09-24T10:00",
+      "actor_org_id": "org-exh-01",
+      "order_id": "order-02",
+      "split_ids": ["split-01", "split-02"],
+      "reason": "按渠道分仓安排拆单：1200 袋首批入渠道雪兰莪仓，800 袋由渠道直发 PetWorld 门店"
+    },
+    {
+      "id": "evt-006",
+      "type": "collaboration_terminated",
+      "at": "2026-09-19T16:00",
+      "actor_org_id": "org-exh-01",
+      "collaboration_id": "collab-01",
+      "revoked_authorization_ids": ["auth-02"],
+      "reason": "MCN 未完成马来西亚广告合规复核且主播档期无法保证，双方同意终止系列合作并撤回素材复用授权"
+    }
+  ],
+  "materials": [
+    {
+      "id": "mat-01",
+      "product_id": "prod-01",
+      "org_id": "org-exh-01",
+      "category": "pet_cleaning",
+      "kind": "catalog_and_quotes",
+      "quote_ids": ["quote-01", "quote-02"],
+      "sample_ids": ["samp-01"]
+    },
+    {
+      "id": "mat-02",
+      "product_id": "prod-02",
+      "org_id": "org-exh-01",
+      "category": "pet_grooming",
+      "kind": "catalog_and_quotes",
+      "quote_ids": ["quote-03"],
+      "sample_ids": ["samp-02"]
+    },
+    {
+      "id": "mat-03",
+      "product_id": "prod-03",
+      "org_id": "org-exh-01",
+      "category": "pet_feeding_electrical",
+      "kind": "catalog_pending_certification",
+      "quote_ids": [],
+      "sample_ids": ["samp-03"]
+    }
+  ],
+  "visibility_grants": [
+    {
+      "id": "vg-01",
+      "material_id": "mat-01",
+      "recipient_identity_id": "id-ch-01",
+      "basis_demand_id": "dem-03",
+      "status": "active",
+      "granted_at": "2026-09-21"
+    },
+    {
+      "id": "vg-02",
+      "material_id": "mat-01",
+      "recipient_identity_id": "id-buy-01",
+      "basis_demand_id": "dem-01",
+      "status": "active",
+      "granted_at": "2026-09-20"
+    },
+    {
+      "id": "vg-03",
+      "material_id": "mat-02",
+      "recipient_identity_id": "id-buy-02",
+      "basis_demand_id": "dem-02",
+      "status": "expired",
+      "granted_at": "2026-09-20",
+      "ended_at": "2026-09-25",
+      "end_reason": "关联报价 quote-03 已过期，材料自动停止对外可见"
+    }
+  ],
+  "sample_followups": [
+    {
+      "id": "sf-01",
+      "sample_id": "samp-01",
+      "identity_id": "id-buy-01",
+      "demand_id": "dem-01",
+      "quote_id": "quote-01",
+      "order_id": "order-01",
+      "stage": "ordered",
+      "contact_id": "contact-01",
+      "contact_purpose": "sample_test_followup",
+      "last_action_at": "2026-09-23",
+      "last_action": "样品测试通过，买家按 quote-01 下单 500 袋"
+    },
+    {
+      "id": "sf-02",
+      "sample_id": null,
+      "identity_id": "id-buy-02",
+      "demand_id": "dem-02",
+      "quote_id": "quote-03",
+      "order_id": null,
+      "stage": "quote_expired",
+      "contact_id": "contact-02",
+      "contact_purpose": "quotation_followup",
+      "last_action_at": "2026-09-22",
+      "last_action": "已发送报价；买家展后未确认，报价 9 月 25 日到期，未经新的同意不再促销联系"
+    }
+  ],
+  "outcomes": {
+    "edition": "2026-KL-PET",
+    "org_id": "org-exh-01",
+    "as_of": "2026-09-27",
+    "conversion_funnel": {
+      "name_cards_collected": 3,
+      "unique_buyer_identities": 2,
+      "demands_logged": 3,
+      "samples_arranged": 1,
+      "valid_quotes": 2,
+      "orders_won": 2,
+      "order_amount_myr": 29850.0
+    },
+    "fulfillment_progress": {
+      "orders_total": 2,
+      "in_fulfillment": 1,
+      "partially_fulfilled": 1,
+      "completed": 0,
+      "split_legs_total": 2,
+      "split_legs_fulfilled": 1,
+      "split_legs_pending": 1
+    },
+    "sample_conversion": {
+      "samples_in_testing": 0,
+      "samples_converted_to_order": 1
+    },
+    "evidence": {
+      "name_cards_collected": ["nc-01", "nc-02", "nc-03"],
+      "unique_buyer_identities": ["id-buy-01", "id-buy-02"],
+      "demands_logged": ["dem-01", "dem-02", "dem-03"],
+      "samples_arranged": ["sf-01"],
+      "valid_quotes": ["quote-01", "quote-02"],
+      "orders_won": ["order-01", "order-02"],
+      "split_legs": ["split-01", "split-02"],
+      "samples_in_testing": [],
+      "samples_converted_to_order": ["sf-01"]
+    }
+  }
 }

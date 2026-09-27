@@ -1,49 +1,785 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "海外展会本地化履约共享资料",
+  "title": "海外展会本地化履约平台共享资料",
   "type": "object",
   "required": [
     "domain",
     "version",
     "sample_id",
+    "edition",
+    "as_of",
     "actors",
     "facts",
-    "constraints"
+    "constraints",
+    "event_types",
+    "consent_purposes",
+    "organizations",
+    "qualifications",
+    "product_catalog",
+    "samples",
+    "booths",
+    "show_activities",
+    "activity_slots",
+    "representatives",
+    "identities",
+    "name_cards",
+    "contacts",
+    "demands",
+    "interpretation_sessions",
+    "livestream_authorizations",
+    "livestreams",
+    "livestream_retractions",
+    "meeting_minutes",
+    "quotes",
+    "orders",
+    "collaborations",
+    "change_events",
+    "materials",
+    "visibility_grants",
+    "sample_followups",
+    "outcomes"
   ],
   "properties": {
-    "domain": {
-      "type": "string",
-      "minLength": 1
-    },
-    "version": {
-      "type": "integer",
-      "minimum": 1
-    },
-    "sample_id": {
-      "type": "string",
-      "minLength": 1
-    },
+    "domain": { "type": "string", "const": "overseas-exhibition-fulfillment" },
+    "version": { "type": "integer", "minimum": 2 },
+    "sample_id": { "type": "string", "minLength": 1 },
+    "edition": { "type": "string", "minLength": 1 },
+    "as_of": { "type": "string", "format": "date" },
     "actors": {
       "type": "array",
       "minItems": 2,
-      "items": {
-        "type": "string"
-      }
+      "items": { "type": "string" }
     },
     "facts": {
       "type": "array",
       "minItems": 2,
-      "items": {
-        "type": "string"
-      }
+      "items": { "type": "string" }
     },
     "constraints": {
       "type": "array",
       "minItems": 2,
+      "items": { "type": "string" }
+    },
+    "event_types": {
+      "type": "array",
+      "minItems": 1,
       "items": {
-        "type": "string"
+        "enum": [
+          "exhibit_swap",
+          "representative_absent",
+          "identity_merge",
+          "livestream_retraction",
+          "order_split",
+          "collaboration_terminated"
+        ]
       }
-    }
+    },
+    "consent_purposes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "quotation_followup",
+          "sample_test_followup",
+          "order_fulfillment"
+        ]
+      }
+    },
+    "organizations": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/org" }
+    },
+    "qualifications": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/qualification" }
+    },
+    "product_catalog": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/product" }
+    },
+    "samples": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/sample" }
+    },
+    "booths": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/booth" }
+    },
+    "show_activities": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/activity" }
+    },
+    "activity_slots": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/activitySlot" }
+    },
+    "representatives": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/representative" }
+    },
+    "identities": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/identity" }
+    },
+    "name_cards": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/nameCard" }
+    },
+    "contacts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/contact" }
+    },
+    "demands": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/demand" }
+    },
+    "interpretation_sessions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/interpretation" }
+    },
+    "livestream_authorizations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/authorization" }
+    },
+    "livestreams": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/livestream" }
+    },
+    "livestream_retractions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/retraction" }
+    },
+    "meeting_minutes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/minutes" }
+    },
+    "quotes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/quote" }
+    },
+    "orders": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/order" }
+    },
+    "collaborations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/collaboration" }
+    },
+    "change_events": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/changeEvent" }
+    },
+    "materials": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/material" }
+    },
+    "visibility_grants": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/visibilityGrant" }
+    },
+    "sample_followups": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sampleFollowup" }
+    },
+    "outcomes": { "$ref": "#/$defs/outcomes" }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "$defs": {
+    "id": { "type": "string", "minLength": 1 },
+    "date": { "type": "string" },
+    "org": {
+      "type": "object",
+      "required": ["id", "name", "role", "country"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string", "minLength": 1 },
+        "role": {
+          "enum": [
+            "exhibitor",
+            "host",
+            "buyer",
+            "local_channel",
+            "livestream_partner",
+            "translation_provider"
+          ]
+        },
+        "country": { "type": "string", "minLength": 2 }
+      },
+      "additionalProperties": false
+    },
+    "qualification": {
+      "type": "object",
+      "required": [
+        "id",
+        "org_id",
+        "status",
+        "categories",
+        "documents",
+        "reviewed_by",
+        "reviewed_at"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "org_id": { "$ref": "#/$defs/id" },
+        "status": { "enum": ["submitted", "approved", "rejected", "expired"] },
+        "categories": { "type": "array", "items": { "type": "string" } },
+        "documents": { "type": "array", "items": { "type": "string" } },
+        "reviewed_by": { "$ref": "#/$defs/id" },
+        "reviewed_at": { "$ref": "#/$defs/date" }
+      },
+      "additionalProperties": false
+    },
+    "product": {
+      "type": "object",
+      "required": ["id", "org_id", "name", "category", "status"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "org_id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string", "minLength": 1 },
+        "category": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["listed", "swapped_off", "delisted"] }
+      },
+      "additionalProperties": false
+    },
+    "sample": {
+      "type": "object",
+      "required": ["id", "product_id", "org_id", "qty", "unit", "customs_status"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "product_id": { "$ref": "#/$defs/id" },
+        "org_id": { "$ref": "#/$defs/id" },
+        "qty": { "type": "integer", "minimum": 1 },
+        "unit": { "type": "string", "minLength": 1 },
+        "customs_status": {
+          "enum": ["pre_declaration", "customs_cleared", "customs_held", "re_exported"]
+        },
+        "permit_ref": { "type": ["string", "null"] },
+        "cleared_at": { "type": ["string", "null"] },
+        "held_reason": { "type": ["string", "null"] },
+        "booth_id": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "booth": {
+      "type": "object",
+      "required": ["id", "org_id", "hall", "setup_window", "open_days"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "org_id": { "$ref": "#/$defs/id" },
+        "hall": { "type": "string" },
+        "setup_window": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "type": "string" }
+        },
+        "open_days": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "activity": {
+      "type": "object",
+      "required": ["id", "name", "host_org_id", "start", "end", "location"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string" },
+        "host_org_id": { "$ref": "#/$defs/id" },
+        "start": { "type": "string" },
+        "end": { "type": "string" },
+        "location": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "activitySlot": {
+      "type": "object",
+      "required": ["id", "activity_id", "org_id", "start", "status"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "activity_id": { "$ref": "#/$defs/id" },
+        "org_id": { "$ref": "#/$defs/id" },
+        "partner_org_id": { "$ref": "#/$defs/id" },
+        "start": { "type": "string" },
+        "assigned_rep_id": { "$ref": "#/$defs/id" },
+        "status": { "enum": ["scheduled", "held", "cancelled", "reassigned"] }
+      },
+      "additionalProperties": false
+    },
+    "representative": {
+      "type": "object",
+      "required": ["id", "org_id", "name", "role", "status"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "org_id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "status": { "enum": ["present", "absent", "reassigned_offsite"] }
+      },
+      "additionalProperties": false
+    },
+    "identity": {
+      "type": "object",
+      "required": ["id", "org_id", "kind", "status"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "org_id": { "$ref": "#/$defs/id" },
+        "kind": {
+          "enum": ["buyer", "local_channel", "exhibitor_rep", "partner"]
+        },
+        "status": { "enum": ["active", "merged_away"] },
+        "merged_from": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "merged_into": { "$ref": "#/$defs/id" }
+      },
+      "additionalProperties": false
+    },
+    "nameCard": {
+      "type": "object",
+      "required": ["id", "scanned_at", "booth_id", "identity_id"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "scanned_at": { "type": "string" },
+        "booth_id": { "$ref": "#/$defs/id" },
+        "identity_id": { "$ref": "#/$defs/id" },
+        "original_identity_id": { "type": ["string", "null"] },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "contact": {
+      "type": "object",
+      "required": [
+        "id",
+        "identity_id",
+        "channels",
+        "purposes",
+        "basis",
+        "granted_at",
+        "valid_until"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "identity_id": { "$ref": "#/$defs/id" },
+        "channels": { "type": "array", "items": { "type": "string" } },
+        "purposes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "quotation_followup",
+              "sample_test_followup",
+              "order_fulfillment"
+            ]
+          }
+        },
+        "basis": { "enum": ["signed_form", "name_card", "digital_optin"] },
+        "granted_at": { "$ref": "#/$defs/date" },
+        "valid_until": { "$ref": "#/$defs/date" }
+      },
+      "additionalProperties": false
+    },
+    "demand": {
+      "type": "object",
+      "required": [
+        "id",
+        "identity_id",
+        "category",
+        "summary",
+        "stage",
+        "captured_at",
+        "captured_by"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "identity_id": { "$ref": "#/$defs/id" },
+        "category": { "type": "string" },
+        "summary": { "type": "string" },
+        "qty": { "type": "integer", "minimum": 0 },
+        "stage": {
+          "enum": [
+            "browsed",
+            "quoted",
+            "sample_arranged",
+            "sample_testing",
+            "ordered",
+            "lost",
+            "quote_expired"
+          ]
+        },
+        "sample_followup_id": { "type": ["string", "null"] },
+        "captured_at": { "type": "string" },
+        "captured_by": { "$ref": "#/$defs/id" }
+      },
+      "additionalProperties": false
+    },
+    "interpretation": {
+      "type": "object",
+      "required": ["id", "demand_id", "provider_org_id", "languages", "start", "status"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "demand_id": { "$ref": "#/$defs/id" },
+        "provider_org_id": { "$ref": "#/$defs/id" },
+        "languages": { "type": "array", "items": { "type": "string" } },
+        "start": { "type": "string" },
+        "status": { "enum": ["requested", "completed", "cancelled"] }
+      },
+      "additionalProperties": false
+    },
+    "authorization": {
+      "type": "object",
+      "required": ["id", "org_id", "partner_org_id", "scopes", "status", "granted_at"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "org_id": { "$ref": "#/$defs/id" },
+        "partner_org_id": { "$ref": "#/$defs/id" },
+        "scopes": { "type": "array", "items": { "type": "string" } },
+        "status": { "enum": ["active", "expired", "revoked"] },
+        "granted_at": { "$ref": "#/$defs/date" },
+        "valid_until": { "$ref": "#/$defs/date" },
+        "revoked_at": { "$ref": "#/$defs/date" },
+        "revoke_event_id": { "$ref": "#/$defs/id" }
+      },
+      "additionalProperties": false
+    },
+    "clip": {
+      "type": "object",
+      "required": ["id", "segment", "status"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "segment": { "type": "string" },
+        "status": { "enum": ["published", "retracted"] },
+        "retraction_id": { "$ref": "#/$defs/id" }
+      },
+      "additionalProperties": false
+    },
+    "livestream": {
+      "type": "object",
+      "required": ["id", "slot_id", "org_id", "partner_org_id", "authorization_id", "status"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "slot_id": { "$ref": "#/$defs/id" },
+        "org_id": { "$ref": "#/$defs/id" },
+        "partner_org_id": { "$ref": "#/$defs/id" },
+        "authorization_id": { "$ref": "#/$defs/id" },
+        "product_ids": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "status": { "enum": ["scheduled", "completed", "cancelled"] },
+        "clips": { "type": "array", "items": { "$ref": "#/$defs/clip" } }
+      },
+      "additionalProperties": false
+    },
+    "retraction": {
+      "type": "object",
+      "required": ["id", "livestream_id", "clip_id", "at", "requested_by", "reason", "event_id"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "livestream_id": { "$ref": "#/$defs/id" },
+        "clip_id": { "$ref": "#/$defs/id" },
+        "at": { "type": "string" },
+        "requested_by": { "$ref": "#/$defs/id" },
+        "reason": { "type": "string", "minLength": 1 },
+        "event_id": { "$ref": "#/$defs/id" }
+      },
+      "additionalProperties": false
+    },
+    "minutes": {
+      "type": "object",
+      "required": [
+        "id",
+        "demand_id",
+        "booth_id",
+        "at",
+        "attendee_identity_ids",
+        "attendee_rep_ids",
+        "summary"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "demand_id": { "$ref": "#/$defs/id" },
+        "booth_id": { "$ref": "#/$defs/id" },
+        "at": { "type": "string" },
+        "attendee_identity_ids": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "attendee_rep_ids": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "interpretation_session_id": { "$ref": "#/$defs/id" },
+        "quote_ids": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "summary": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "quote": {
+      "type": "object",
+      "required": [
+        "id",
+        "demand_id",
+        "identity_id",
+        "product_id",
+        "currency",
+        "unit_price",
+        "qty",
+        "amount",
+        "valid_from",
+        "valid_until",
+        "status"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "demand_id": { "$ref": "#/$defs/id" },
+        "identity_id": { "$ref": "#/$defs/id" },
+        "product_id": { "$ref": "#/$defs/id" },
+        "currency": { "type": "string", "minLength": 3 },
+        "unit_price": { "type": "number", "exclusiveMinimum": 0 },
+        "qty": { "type": "integer", "minimum": 1 },
+        "amount": { "type": "number", "exclusiveMinimum": 0 },
+        "valid_from": { "$ref": "#/$defs/date" },
+        "valid_until": { "$ref": "#/$defs/date" },
+        "status": { "enum": ["valid", "expired", "withdrawn", "converted"] }
+      },
+      "additionalProperties": false
+    },
+    "split": {
+      "type": "object",
+      "required": ["id", "qty", "amount", "assignee_org_id", "fulfillment_role", "status"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "qty": { "type": "integer", "minimum": 1 },
+        "amount": { "type": "number", "exclusiveMinimum": 0 },
+        "assignee_org_id": { "$ref": "#/$defs/id" },
+        "fulfillment_role": { "type": "string" },
+        "status": { "enum": ["pending", "fulfilled", "cancelled"] }
+      },
+      "additionalProperties": false
+    },
+    "order": {
+      "type": "object",
+      "required": ["id", "quote_id", "identity_id", "product_id", "qty", "currency", "amount", "status", "shipped_qty", "placed_at"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "quote_id": { "$ref": "#/$defs/id" },
+        "identity_id": { "$ref": "#/$defs/id" },
+        "product_id": { "$ref": "#/$defs/id" },
+        "qty": { "type": "integer", "minimum": 1 },
+        "currency": { "type": "string" },
+        "amount": { "type": "number", "exclusiveMinimum": 0 },
+        "status": {
+          "enum": ["pending", "in_fulfillment", "partially_fulfilled", "completed", "cancelled", "terminated"]
+        },
+        "shipped_qty": { "type": "integer", "minimum": 0 },
+        "placed_at": { "$ref": "#/$defs/date" },
+        "split_event_id": { "$ref": "#/$defs/id" },
+        "splits": { "type": "array", "items": { "$ref": "#/$defs/split" } }
+      },
+      "additionalProperties": false
+    },
+    "collaboration": {
+      "type": "object",
+      "required": ["id", "org_id", "partner_org_id", "scope", "status"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "org_id": { "$ref": "#/$defs/id" },
+        "partner_org_id": { "$ref": "#/$defs/id" },
+        "scope": { "type": "string" },
+        "status": { "enum": ["active", "suspended", "terminated"] },
+        "authorization_ids": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "terminated_event_id": { "$ref": "#/$defs/id" }
+      },
+      "additionalProperties": false
+    },
+    "changeEvent": {
+      "type": "object",
+      "required": ["id", "type", "at", "actor_org_id", "reason"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "type": {
+          "enum": [
+            "exhibit_swap",
+            "representative_absent",
+            "identity_merge",
+            "livestream_retraction",
+            "order_split",
+            "collaboration_terminated"
+          ]
+        },
+        "at": { "type": "string" },
+        "actor_org_id": { "$ref": "#/$defs/id" },
+        "actor_rep_id": { "$ref": "#/$defs/id" },
+        "reason": { "type": "string", "minLength": 1 },
+        "approved_by": { "$ref": "#/$defs/id" },
+        "booth_id": { "$ref": "#/$defs/id" },
+        "removed_sample_id": { "$ref": "#/$defs/id" },
+        "added_sample_id": { "$ref": "#/$defs/id" },
+        "absent_rep_id": { "$ref": "#/$defs/id" },
+        "replacement_rep_id": { "$ref": "#/$defs/id" },
+        "activity_slot_id": { "$ref": "#/$defs/id" },
+        "merged_identity_id": { "$ref": "#/$defs/id" },
+        "surviving_identity_id": { "$ref": "#/$defs/id" },
+        "retraction_id": { "$ref": "#/$defs/id" },
+        "order_id": { "$ref": "#/$defs/id" },
+        "split_ids": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "collaboration_id": { "$ref": "#/$defs/id" },
+        "revoked_authorization_ids": { "type": "array", "items": { "$ref": "#/$defs/id" } }
+      },
+      "additionalProperties": false
+    },
+    "material": {
+      "type": "object",
+      "required": ["id", "product_id", "org_id", "category", "kind", "quote_ids", "sample_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "product_id": { "$ref": "#/$defs/id" },
+        "org_id": { "$ref": "#/$defs/id" },
+        "category": { "type": "string" },
+        "kind": { "type": "string" },
+        "quote_ids": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "sample_ids": { "type": "array", "items": { "$ref": "#/$defs/id" } }
+      },
+      "additionalProperties": false
+    },
+    "visibilityGrant": {
+      "type": "object",
+      "required": ["id", "material_id", "recipient_identity_id", "basis_demand_id", "status", "granted_at"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "material_id": { "$ref": "#/$defs/id" },
+        "recipient_identity_id": { "$ref": "#/$defs/id" },
+        "basis_demand_id": { "$ref": "#/$defs/id" },
+        "status": { "enum": ["active", "expired", "revoked"] },
+        "granted_at": { "$ref": "#/$defs/date" },
+        "ended_at": { "$ref": "#/$defs/date" },
+        "end_reason": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "sampleFollowup": {
+      "type": "object",
+      "required": ["id", "identity_id", "demand_id", "stage", "contact_id", "contact_purpose", "last_action_at", "last_action"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "sample_id": { "type": ["string", "null"] },
+        "identity_id": { "$ref": "#/$defs/id" },
+        "demand_id": { "$ref": "#/$defs/id" },
+        "quote_id": { "type": ["string", "null"] },
+        "order_id": { "type": ["string", "null"] },
+        "stage": {
+          "enum": [
+            "arranged",
+            "in_transit",
+            "testing",
+            "ordered",
+            "quote_expired",
+            "lost"
+          ]
+        },
+        "contact_id": { "$ref": "#/$defs/id" },
+        "contact_purpose": {
+          "enum": [
+            "quotation_followup",
+            "sample_test_followup",
+            "order_fulfillment"
+          ]
+        },
+        "last_action_at": { "$ref": "#/$defs/date" },
+        "last_action": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "outcomes": {
+      "type": "object",
+      "required": [
+        "edition",
+        "org_id",
+        "as_of",
+        "conversion_funnel",
+        "fulfillment_progress",
+        "sample_conversion",
+        "evidence"
+      ],
+      "properties": {
+        "edition": { "type": "string" },
+        "org_id": { "$ref": "#/$defs/id" },
+        "as_of": { "$ref": "#/$defs/date" },
+        "conversion_funnel": {
+          "type": "object",
+          "required": [
+            "name_cards_collected",
+            "unique_buyer_identities",
+            "demands_logged",
+            "samples_arranged",
+            "valid_quotes",
+            "orders_won",
+            "order_amount_myr"
+          ],
+          "properties": {
+            "name_cards_collected": { "type": "integer", "minimum": 0 },
+            "unique_buyer_identities": { "type": "integer", "minimum": 0 },
+            "demands_logged": { "type": "integer", "minimum": 0 },
+            "samples_arranged": { "type": "integer", "minimum": 0 },
+            "valid_quotes": { "type": "integer", "minimum": 0 },
+            "orders_won": { "type": "integer", "minimum": 0 },
+            "order_amount_myr": { "type": "number", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "fulfillment_progress": {
+          "type": "object",
+          "required": [
+            "orders_total",
+            "in_fulfillment",
+            "partially_fulfilled",
+            "completed",
+            "split_legs_total",
+            "split_legs_fulfilled",
+            "split_legs_pending"
+          ],
+          "properties": {
+            "orders_total": { "type": "integer", "minimum": 0 },
+            "in_fulfillment": { "type": "integer", "minimum": 0 },
+            "partially_fulfilled": { "type": "integer", "minimum": 0 },
+            "completed": { "type": "integer", "minimum": 0 },
+            "split_legs_total": { "type": "integer", "minimum": 0 },
+            "split_legs_fulfilled": { "type": "integer", "minimum": 0 },
+            "split_legs_pending": { "type": "integer", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "sample_conversion": {
+          "type": "object",
+          "required": ["samples_in_testing", "samples_converted_to_order"],
+          "properties": {
+            "samples_in_testing": { "type": "integer", "minimum": 0 },
+            "samples_converted_to_order": { "type": "integer", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "evidence": {
+          "type": "object",
+          "required": [
+            "name_cards_collected",
+            "unique_buyer_identities",
+            "demands_logged",
+            "samples_arranged",
+            "valid_quotes",
+            "orders_won",
+            "split_legs",
+            "samples_in_testing",
+            "samples_converted_to_order"
+          ],
+          "properties": {
+            "name_cards_collected": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+            "unique_buyer_identities": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+            "demands_logged": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+            "samples_arranged": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+            "valid_quotes": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+            "orders_won": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+            "split_legs": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+            "samples_in_testing": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+            "samples_converted_to_order": { "type": "array", "items": { "$ref": "#/$defs/id" } }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
 }
